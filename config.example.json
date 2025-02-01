@@ -1,0 +1,30 @@
+{
+  "debug": true,
+  "language": {
+    "default": "en",
+    "available": ["en"],
+    "fallbacks": {
+      "fr": "en"
+    }
+  },
+  "response": {
+    "requiredScore": 0.975,
+    "default": {
+      "actions": ["handOff"],
+      "messages": {
+        "en": "Sorry, I don't understand."
+      }
+    }
+  },
+  "server": {
+    "host": "0.0.0.0",
+    "port": 3000
+  },
+  "connectors": {
+    "discord": {
+      "enabled": true,
+      "token": "BOT_TOKEN",
+      "prefix": "<@mention>"
+    }
+  }
+}

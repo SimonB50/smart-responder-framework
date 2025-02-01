@@ -1,0 +1,24 @@
+{
+  "name": "smart-responder-framework",
+  "version": "1.0.0",
+  "description": "Framework for building advanced smart responders using NLP",
+  "main": "index.js",
+  "author": "SimonB50",
+  "type": "module",
+  "license": "GPL-3.0-only",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js --dev-mode"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^7.2.4",
+    "chalk": "^5.4.1",
+    "discord.js": "^14.17.3",
+    "fastify": "^5.2.1",
+    "node-nlp": "^5.0.0-alpha.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "nodemon": "^3.1.9"
+  }
+}

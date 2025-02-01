@@ -1,0 +1,9 @@
+# Node.js
+node_modules/
+yarn.lock
+
+# NLP model
+*.nlp
+
+# Config files
+config.json
