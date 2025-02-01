@@ -10,7 +10,8 @@ Smart Responder Framework (SRF) is a framework for building smart responders for
 ## Installation
 1. Clone the repository.
 2. Install the dependencies using `npm i`.
-3. Run the server using `npm start`.
+3. Rename `config.example.json` to `config.json` and set the configuration.
+4. Run the server using `npm start`.
 
 ## Usage
 This framework currently supports following usage scenarios:
