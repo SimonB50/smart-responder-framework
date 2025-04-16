@@ -1,4 +1,5 @@
 import { NlpManager, Language } from "node-nlp";
+import { stringSimilarity } from "string-similarity-js";
 import Utils from "./utils.js";
 
 const config = await Utils.getConfig();
@@ -45,7 +46,12 @@ const getDefaultResponse = async (language) => {
 const processMessage = async (message, options = {}) => {
   let { language, restrict } = options;
 
-  if (!message) return null;
+  if (
+    !message ||
+    message.length < config.request.minLength ||
+    message.length > config.request.maxLength
+  )
+    return null;
 
   if (!language) language = await guessLanguage(message);
   if (!config.language.available.includes(language)) {
@@ -67,6 +73,15 @@ const processMessage = async (message, options = {}) => {
       (!restrict || !restrict.length || intent.groups.includes(restrict))
   );
   if (!intentData) return getDefaultResponse(language);
+  if (
+    !intentData.samples.some(
+      (sample) =>
+        stringSimilarity(message, sample) > config.request.expectedSimilarity
+    )
+  ) {
+    return getDefaultResponse(language);
+  }
+
   const responseMessage = await intentData.generateResponse(
     response.intent,
     response

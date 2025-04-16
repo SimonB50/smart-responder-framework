@@ -10,8 +10,14 @@ const start = async () => {
       message: "Enter your message:",
     });
     const response = await NLP.processMessage(message);
-    console.log(`${chalk.blue.bold(">>")} ${chalk.gray(response.message)}`);
-    if (response.trigger.length) {
+    console.log(
+      `${chalk.blue.bold(">>")} ${chalk.gray(
+        response?.message
+          ? response.message
+          : "Your message does not meet the requirements."
+      )}`
+    );
+    if (response && response.trigger.length) {
       console.log(
         `${chalk.green.bold(">>")} Triggered actions: ${response.trigger
           .map((action) => chalk.bold(action))

@@ -7,6 +7,11 @@
       "fr": "en"
     }
   },
+  "request": {
+    "minLength": 5,
+    "maxLength": 2000,
+    "expectedSimilarity": 0.4
+  },
   "response": {
     "requiredScore": 0.975,
     "default": {
