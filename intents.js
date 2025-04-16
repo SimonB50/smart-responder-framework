@@ -52,6 +52,8 @@ const processIntents = async (directory) => {
         `\n> Path: ${path.join(directory, intent)}`
       );
     } else {
+      if (intent.startsWith("_") || ![".js"].some((x) => intent.endsWith(x)))
+        continue;
       const intentFile = path.join(directory, intent);
       const intentData = await processIntent(intent, intentFile);
       if (intentData) intents.push(intentData);
