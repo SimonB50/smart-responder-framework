@@ -5,5 +5,13 @@ yarn.lock
 # NLP model
 *.nlp
 
+# NLP intents
+intents/
+!intents/(main)/[en]/about.js
+!intents/(main)/[en]/help.js
+
 # Config files
 config.json
+
+# VSCode settings
+.vscode/
