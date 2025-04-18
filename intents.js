@@ -168,7 +168,7 @@ const processDynamicIntent = async (intent, file) => {
   let intentObject = {
     name: intent.replace(/\.js/g, ""),
     samples: intentData.default.samples,
-    generateResonse: intentData.default.generateResponse,
+    generateResponse: intentData.default.generateResponse,
     triggerActions: intentData.default.triggerActions,
     source: file,
   };
