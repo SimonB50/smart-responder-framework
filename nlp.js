@@ -81,7 +81,6 @@ const processMessage = async (message, options = {}) => {
   ) {
     return getDefaultResponse(language);
   }
-
   const responseMessage = await intentData.generateResponse(
     response.intent,
     response

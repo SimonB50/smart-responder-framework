@@ -16,7 +16,8 @@
     "discord.js": "^14.17.3",
     "fastify": "^5.2.1",
     "node-nlp": "^5.0.0-alpha.5",
-    "string-similarity-js": "^2.1.4"
+    "string-similarity-js": "^2.1.4",
+    "yaml": "^2.7.1"
   },
   "devDependencies": {
     "@types/node": "^22.13.0",

@@ -69,13 +69,25 @@ Note that this will **disable** all of the connectors.
 ## Creating a Smart Responder
 You can create a smart responder by defining the intents `intents` directory.
 This directory has specific structure:
-- Each intent has its own `.js` file (`.json` support will be added soon).
+- Each intent has its own file
 - All of the intents needs to be placed into `[language]` directory (e.g. `en` for English). You cannot place one intent file in multiple languages.
 - You can your intent files info `(group)` folders to group them. You can nest these folders as much as you want.
-- Each intent file needs to export the `intent` object which has the following structure:
-  - `samples`: Array of sample messages for the intent.
-  - `triggerActions`: Array of triggers for the intent.
+
+### Static intents
+Static intent is a type of intent that only returns a predefined response.
+Supported file types are `.json`, `.yaml` and `.yml`
+Each static intent should define the following properties:
+  - `samples`: Array of sample messages for detecting the intent.
+  - `response`: Message that should be returned when the intent is detected.
+  - `triggerActions`: Array of triggers that should be executed when the intent is detected.
+
+### Dynamic intents
+Dynamic intent base on executing a function to generate the response.
+You can only use `.js` files for dynamic intents.
+Each dynamic intent should define the following properties:
+  - `samples`: Array of sample messages for detecting the intent.
   - `generateResponse()`: Function that will be called when the intent is detected. This function needs to return a string with the response.
+  - `triggerActions`: Array of triggers that should be executed when the intent is detected.
 
 Example intent files can be found in the `intents` directory.
 

@@ -2,6 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import Utils from "./utils.js";
 import chalk from "chalk";
+import yaml from "yaml";
 
 const config = await Utils.getConfig();
 
@@ -52,11 +53,27 @@ const processIntents = async (directory) => {
         `\n> Path: ${path.join(directory, intent)}`
       );
     } else {
-      if (intent.startsWith("_") || ![".js"].some((x) => intent.endsWith(x)))
+      if (
+        intent.startsWith("_") ||
+        ![".json", ".yaml", ".yml", ".js"].some((x) => intent.endsWith(x))
+      )
         continue;
       const intentFile = path.join(directory, intent);
-      const intentData = await processIntent(intent, intentFile);
-      if (intentData) intents.push(intentData);
+      let intentData;
+      switch (true) {
+        case intent.endsWith(".json"):
+        case intent.endsWith(".yaml"):
+        case intent.endsWith(".yml"):
+          intentData = await processStaticIntent(intent, intentFile);
+          break;
+        case intent.endsWith(".js"):
+          intentData = await processDynamicIntent(intent, intentFile);
+          break;
+        default:
+          continue;
+      }
+      if (!intentData) continue;
+      intents.push(intentData);
     }
   }
   return intents;
@@ -90,12 +107,51 @@ const processLanguage = async (language, directory) => {
   return languageIntents;
 };
 
-const processIntent = async (intent, file) => {
+const processStaticIntent = async (intent, file) => {
+  const intentContent = await fs.readFile(file, "utf-8");
+  let intentData = null;
+  switch (true) {
+    case file.endsWith(".json"):
+      intentData = JSON.parse(intentContent);
+      break;
+    case file.endsWith(".yaml"):
+    case file.endsWith(".yml"):
+      intentData = yaml.parse(intentContent);
+      break;
+  }
+  if (
+    !intentData ||
+    typeof intentData !== "object" ||
+    !["samples", "response", "triggerActions"].every((key) => key in intentData)
+  ) {
+    Utils.logError(
+      `Intent ${chalk.bold(
+        intent
+      )} is missing one of the required keys: ${chalk.bold(
+        "samples, response, triggerActions"
+      )}.`,
+      `\n> Path: ${file}`
+    );
+    return null;
+  }
+  let intentObject = {
+    name: intent.replace(/\.json|\.yaml|\.yml/g, ""),
+    samples: intentData.samples,
+    generateResponse: () => {
+      return intentData.response;
+    },
+    triggerActions: intentData.triggerActions,
+    source: file,
+  };
+  return intentObject;
+};
+
+const processDynamicIntent = async (intent, file) => {
   const intentData = await import(`file://${file}`);
   if (
     !intentData.default ||
     typeof intentData.default !== "object" ||
-    !["samples", "triggerActions", "generateResponse"].every(
+    !["samples", "generateResponse", "triggerActions"].every(
       (key) => key in intentData.default
     )
   ) {
@@ -103,7 +159,7 @@ const processIntent = async (intent, file) => {
       `Intent ${chalk.bold(
         intent
       )} is missing one of the required keys: ${chalk.bold(
-        "samples, triggerActions, generateResponse"
+        "samples, generateResponse, triggerActions"
       )}.`,
       `\n> Path: ${file}`
     );
@@ -111,7 +167,9 @@ const processIntent = async (intent, file) => {
   }
   let intentObject = {
     name: intent.replace(/\.js/g, ""),
-    ...intentData.default,
+    samples: intentData.default.samples,
+    generateResonse: intentData.default.generateResponse,
+    triggerActions: intentData.default.triggerActions,
     source: file,
   };
   return intentObject;
