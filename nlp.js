@@ -46,19 +46,19 @@ const getDefaultResponse = async (language) => {
 const processMessage = async (message, options = {}) => {
   let { language, restrict } = options;
 
-  if (
-    !message ||
-    message.length < config.request.minLength ||
-    message.length > config.request.maxLength
-  )
-    return null;
-
   if (!language) language = await guessLanguage(message);
   if (!config.language.available.includes(language)) {
     if (config.language.fallbacks[language])
       language = config.language.fallbacks[language];
     else language = config.language.default;
   }
+
+  if (
+    !message ||
+    message.length < config.request.minLength ||
+    message.length > config.request.maxLength
+  )
+    return getDefaultResponse(language);
 
   const response = await manager.process(language, message);
   if (
