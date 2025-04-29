@@ -35,5 +35,11 @@
         "channels": ["123456789012345678"]
       }
     }
+  },
+  "translation": {
+    "engine": "google",
+    "apiKey": "OPTIONAL_API_KEY",
+    "apiUrl": "URL_OF_LIBRETRANSLATE_INSTANCE",
+    "targetLanguages": ["pl"]
   }
 }

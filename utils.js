@@ -14,6 +14,15 @@ const isFolder = async (path) => {
   return stats.isDirectory();
 };
 
+const exists = async (path) => {
+  try {
+    await fs.stat(path);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 // CONFIG UTILS
 
 let configCache = {};
@@ -55,4 +64,12 @@ const logDebug = (...message) => {
   );
 };
 
-export default { getConfig, getDirname, isFolder, logInfo, logError, logDebug };
+export default {
+  getConfig,
+  getDirname,
+  isFolder,
+  exists,
+  logInfo,
+  logError,
+  logDebug,
+};
