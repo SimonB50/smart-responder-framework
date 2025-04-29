@@ -1,0 +1,12 @@
+{
+  "samples": [
+    "How to use SRF?",
+    "How to use Smart Response Framework?",
+    "Can you help me with using SRF?",
+    "Help me with SRF",
+    "How to create responders?",
+    "Give me instructions on how to use SRF"
+  ],
+  "triggerActions": [],
+  "response": "All instructions on how to use Smart Response Framework can be found in the project documentation on github."
+}
