@@ -8,7 +8,7 @@ yarn.lock
 # NLP intents
 intents/
 !intents/(main)/[en]/about.js
-!intents/(main)/[en]/help.js
+!intents/(main)/[en]/help.json
 
 # Config files
 config.json
