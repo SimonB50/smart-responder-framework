@@ -32,9 +32,22 @@ const start = async (config) => {
       config.prefix == "<@mention>"
         ? message.mentions.has(client.user)
         : message.content.startsWith(config.prefix);
-    if (!hasPrefix) return;
+    const autoResponse =
+      !message.author.bot &&
+      config.autoResponse?.enabled &&
+      config.autoResponse.channels.includes(message.channel.id);
+    if (!hasPrefix && !autoResponse) return;
     const response = await NLP.processMessage(message.content);
-    message.reply(response.message);
+    try {
+      message.reply(response.message).then((msg) => {
+        if (!response.intent) return;
+        message.react("👍");
+      });
+    } catch (error) {
+      Utils.logError(
+        `Failed to send message in ${chalk.bold("Discord")} connector! ${error}`
+      );
+    }
   });
 };
 

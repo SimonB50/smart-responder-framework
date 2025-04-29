@@ -29,7 +29,11 @@
     "discord": {
       "enabled": true,
       "token": "BOT_TOKEN",
-      "prefix": "<@mention>"
+      "prefix": "<@mention>",
+      "autoResponse": {
+        "enabled": false,
+        "channels": ["123456789012345678"]
+      }
     }
   }
 }
