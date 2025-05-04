@@ -83,11 +83,13 @@ const translateStatic = async (file, lang) => {
     };
     for (const sampleText of intentData.samples) {
       const translatedSample = await translate(sampleText, {
+        from: lang,
         to: language,
       });
       newIntent.samples.push(translatedSample);
     }
     const translatedResponse = await translate(intentData.response, {
+      from: lang,
       to: language,
     });
     newIntent.response = translatedResponse;
