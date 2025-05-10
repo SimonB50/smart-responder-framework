@@ -17,7 +17,8 @@ Smart Responder Framework (SRF) is a framework for building smart responders for
 This framework currently supports following usage scenarios:
 - **REST API**: You can send a POST request to the `/message` endpoint with the `message` in the body to get the response.
 - **Connectors**: You can connect external services to power the responses.
-- **CLI** (Development): You can use the CLI to test the responses.
+- **CLI** (Development): You can use the CLI to test the responses and check detailed debug information.
+- (Comming soon) **Web UI**: You can use the Web UI to test and manage the intents.
 
 ### REST API
 You can send a POST request to the `/api/message` endpoint to get the response.
@@ -54,13 +55,21 @@ You can connect the Discord connector by properly setting the configuration in t
     "discord": {
       "enabled": true,
       "token": "BOT-TOKEN",
-      "prefix": "<@mention>"
+      "prefix": "<@mention>",
+      "autoResponse": {
+        "enabled": true,
+        "ignoreInvalid": true,
+        "channels": ["123456789012345678"]
+      }
     }
   }
 }
 ```
 
 This will allow you to get the responses in the Discord chat. By default, the bot will respond to the messages that start with the `@mention`.
+
+##### Auto Response
+You can enable the auto response feature by setting the `enabled` property in `autoResponse` to `true`. This will allow the bot to respond to the messages that are sent in the channels defined in the `channels` array. If you want the bot to respond only to valid intents, you can set the `ignoreInvalid` property to `true`. This will make the bot respond only to the messages that are detected as intents.
 
 ### CLI
 You can turn on the CLI by adding `--dev-mode` parameter while starting the server.
@@ -90,6 +99,9 @@ Each dynamic intent should define the following properties:
   - `triggerActions`: Array of triggers that should be executed when the intent is detected.
 
 Example intent files can be found in the `intents` directory.
+
+### Writing proper samples
+When writing the samples, use full sentences and proper grammar with decent length. This is to ensure no false positives are detected. The more samples you provide, the better the intent detection will be. You should add at least 5 samples for each intent.
 
 ### Understanding the triggers
 Triggers are actions that should be executed when the intent is detected. The trigger is only a string that is used to identify the action.
