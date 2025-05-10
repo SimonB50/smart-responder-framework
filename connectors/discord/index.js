@@ -38,6 +38,7 @@ const start = async (config) => {
       config.autoResponse.channels.includes(message.channel.id);
     if (!hasPrefix && !autoResponse) return;
     const response = await NLP.processMessage(message.content);
+    if (config.autoResponse.ignoreInvalid && !response.intent) return;
     try {
       message.reply(response.message).then((msg) => {
         if (!response.intent) return;
