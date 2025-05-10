@@ -1,6 +1,7 @@
 import { NlpManager, Language } from "node-nlp";
 import { stringSimilarity } from "string-similarity-js";
 import Utils from "./utils.js";
+import chalk from "chalk";
 
 const config = await Utils.getConfig();
 
@@ -16,6 +17,18 @@ const languageSystem = new Language();
 const registerIntents = async (intents) => {
   for (const intent of intents) {
     const { name, samples, language } = intent;
+    if (!config.language.available.includes(language)) {
+      Utils.logError(
+        `Intent ${chalk.bold(
+          name
+        )} will not be registered, since language ${chalk.bold(
+          language
+        )} is not set as available. ${chalk.italic(
+          "Please check your config file."
+        )}`
+      );
+      continue;
+    }
     samples.forEach((sample) => manager.addDocument(language, sample, name));
     registeredIntents.push(intent);
     Utils.logDebug(
@@ -44,7 +57,7 @@ const getDefaultResponse = async (language) => {
 };
 
 const processMessage = async (message, options = {}) => {
-  let { language, restrict } = options;
+  let { language, restrict, debug } = options;
 
   if (!language) language = await guessLanguage(message);
   if (!config.language.available.includes(language)) {
@@ -65,31 +78,44 @@ const processMessage = async (message, options = {}) => {
     response.intent == "None" ||
     response.score < config.response.requiredScore
   )
-    return getDefaultResponse(language);
+    return debug
+      ? Utils.appendData(getDefaultResponse(language), {
+          process: response,
+          intent: null,
+        })
+      : getDefaultResponse(language);
   const intentData = registeredIntents.find(
     (intent) =>
       intent.name === response.intent &&
       intent.language === language &&
       (!restrict || !restrict.length || intent.groups.includes(restrict))
   );
-  if (!intentData) return getDefaultResponse(language);
+  if (!intentData)
+    return debug
+      ? Utils.appendData(getDefaultResponse(language), { process: response, intent: null })
+      : getDefaultResponse(language);
   if (
     !intentData.samples.some(
       (sample) =>
         stringSimilarity(message, sample) > config.request.expectedSimilarity
     )
   ) {
-    return getDefaultResponse(language);
+    return debug
+      ? Utils.appendData(getDefaultResponse(language), { process: response, intent: intentData })
+      : getDefaultResponse(language);
   }
   const responseMessage = await intentData.generateResponse(
     response.intent,
     response
   );
-  return {
+  const responseObject = {
     intent: response.intent,
     message: responseMessage,
     trigger: intentData.triggerActions,
   };
+  return debug
+    ? Utils.appendData(responseObject, { process: response, intent: intentData })
+    : responseObject;
 };
 
 export default { registerIntents, train, processMessage };

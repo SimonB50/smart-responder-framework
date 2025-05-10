@@ -64,6 +64,14 @@ const logDebug = (...message) => {
   );
 };
 
+// DATA UTILS
+const appendData = async (source, extras) => {
+  return {
+    ...source,
+    ...extras,
+  }
+}
+
 export default {
   getConfig,
   getDirname,
@@ -72,4 +80,5 @@ export default {
   logInfo,
   logError,
   logDebug,
+  appendData,
 };
