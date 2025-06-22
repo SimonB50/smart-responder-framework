@@ -1,29 +1,50 @@
-# Smart Responder Framework
-Smart Responder Framework (SRF) is a framework for building smart responders for support agents or other types of chatbots. It's powered by **Natural Language Processing** which allows it to understand the messages and properly respond to them while not being resource-intensive compared to using Machine Learning models.
+<p align="center">
+  <img src="./assets/logo.png" alt="Librusek Logo" width="100"/>
+</p>
 
-## Features
-- **Intent Detection**: Detects the intent of the message.
-- **Custom Actions**: Allows you to define custom actions for each intent.
-- **Language Detection**: Detects the language of the message.
-- **Connectors**: Connects external services to power the responses.
-  
-## Installation
+<h1 align="center">Smart Responder Framework (SRF)</h1>
+
+**Smart Responder Framework (SRF)** is a lightweight, efficient framework for building intelligent chat responders, ideal for support agents or chatbot applications. Powered by **Natural Language Processing (NLP)**, SRF offers smart, accurate responses without the heavy resource costs of traditional Machine Learning models.
+
+---
+
+## 🚀 Features
+
+* 🔍 **Intent Detection** — Accurately detects the intent behind each message.
+* 🖠️ **Custom Actions** — Define tailored actions triggered by detected intents.
+* 🌍 **Language Detection** — Identifies the language of incoming messages.
+* 🔌 **Connectors** — Seamlessly integrates with external services for dynamic responses.
+* 🌐 **Web Interface** *(Experimental)* — Intuitive UI for testing and managing intents.
+
+---
+
+## 📦 Installation
+
 1. Clone the repository.
-2. Install the dependencies using `npm i`.
-3. Rename `config.example.json` to `config.json` and set the configuration.
-4. Run the server using `npm start`.
+2. Install dependencies:
 
-## Usage
-This framework currently supports following usage scenarios:
-- **REST API**: You can send a POST request to the `/message` endpoint with the `message` in the body to get the response.
-- **Connectors**: You can connect external services to power the responses.
-- **CLI** (Development): You can use the CLI to test the responses and check detailed debug information.
-- (Comming soon) **Web UI**: You can use the Web UI to test and manage the intents.
+   ```bash
+   npm install
+   ```
+3. Rename `config.example.json` to `config.json` and set up your configuration.
+4. Start the server:
 
-### REST API
-You can send a POST request to the `/api/message` endpoint to get the response.
+   ```bash
+   npm run start
+   ```
 
-#### Request
+---
+
+## 💡 Usage
+
+SRF supports multiple interaction methods:
+
+### ✅ REST API
+
+Send a `POST` request to `/api/message` to get intelligent responses.
+
+**Request:**
+
 ```json
 {
   "message": "Hello",
@@ -31,7 +52,8 @@ You can send a POST request to the `/api/message` endpoint to get the response.
 }
 ```
 
-#### Response
+**Response:**
+
 ```json
 {
   "intent": "example_intent",
@@ -40,14 +62,15 @@ You can send a POST request to the `/api/message` endpoint to get the response.
 }
 ```
 
-### Connectors
-You can connect external services to power the responses. You can define the custom connectors in the `connectors` directory.
+### 🔌 Connectors
 
-#### Currently supported connectors:
-- **Discord**: Connects to Discord to power the responses.
+Integrate with external services to extend SRF's capabilities.
 
-#### Discord Connector
-You can connect the Discord connector by properly setting the configuration in the `config.json` file.
+**Supported Connectors:**
+
+* **Discord** — Connects to Discord for real-time interaction.
+
+**Discord Configuration (in `config.json`):**
 
 ```json
 {
@@ -66,46 +89,118 @@ You can connect the Discord connector by properly setting the configuration in t
 }
 ```
 
-This will allow you to get the responses in the Discord chat. By default, the bot will respond to the messages that start with the `@mention`.
+**Auto Response:**
 
-##### Auto Response
-You can enable the auto response feature by setting the `enabled` property in `autoResponse` to `true`. This will allow the bot to respond to the messages that are sent in the channels defined in the `channels` array. If you want the bot to respond only to valid intents, you can set the `ignoreInvalid` property to `true`. This will make the bot respond only to the messages that are detected as intents.
+* Enable automatic replies within specified channels.
+* Use `ignoreInvalid: true` to filter only valid intents.
 
-### CLI
-You can turn on the CLI by adding `--dev-mode` parameter while starting the server.
-Note that this will **disable** all of the connectors.
+### 💻 CLI (For Development)
 
-## Creating a Smart Responder
-You can create a smart responder by defining the intents `intents` directory.
-This directory has specific structure:
-- Each intent has its own file
-- All of the intents needs to be placed into `[language]` directory (e.g. `en` for English). You cannot place one intent file in multiple languages.
-- You can your intent files info `(group)` folders to group them. You can nest these folders as much as you want.
+Launch with development mode to use the CLI:
 
-### Static intents
-Static intent is a type of intent that only returns a predefined response.
-Supported file types are `.json`, `.yaml` and `.yml`
-Each static intent should define the following properties:
-  - `samples`: Array of sample messages for detecting the intent.
-  - `response`: Message that should be returned when the intent is detected.
-  - `triggerActions`: Array of triggers that should be executed when the intent is detected.
+```bash
+npm run dev
+```
 
-### Dynamic intents
-Dynamic intent base on executing a function to generate the response.
-You can only use `.js` files for dynamic intents.
-Each dynamic intent should define the following properties:
-  - `samples`: Array of sample messages for detecting the intent.
-  - `generateResponse()`: Function that will be called when the intent is detected. This function needs to return a string with the response.
-  - `triggerActions`: Array of triggers that should be executed when the intent is detected.
+Note: This disables all connectors.
 
-Example intent files can be found in the `intents` directory.
+### 🌐 Web Interface *(Experimental)*
 
-### Writing proper samples
-When writing the samples, use full sentences and proper grammar with decent length. This is to ensure no false positives are detected. The more samples you provide, the better the intent detection will be. You should add at least 5 samples for each intent.
+Enable in `config.json`:
 
-### Understanding the triggers
-Triggers are actions that should be executed when the intent is detected. The trigger is only a string that is used to identify the action.
-Implementing the triggers is up to you or the connector you are using.
+```json
+"server": {
+  "web": {
+    "enabled": true
+  }
+}
+```
 
-## License
-This project is licensed under the GNU General Public License v3.0. See the `LICENSE` file for more information.
+Access at `http://localhost:3000/`
+
+**Security Tip:**
+Configure `server.auth` to restrict access and prevent unauthorized changes.
+
+---
+
+## 🧠 Creating a Smart Responder
+
+Organize your intents within the `intents` directory using a flexible structure:
+
+```
+intents/
+├── (support)/
+│   └── [en]/
+│       └── help_request.json
+```
+
+### 🌍 Language Folders
+
+Each folder named using the format `[language]`, where `language` is a valid ISO 639-1 code (e.g., `[en]`, `[fr]`, `[pl]`), is treated as a language folder.
+
+* Language folders can appear at any level of the tree.
+* You **must not** nest one language folder inside another. Doing so will result in an error.
+* Intents must be located inside a language folder to be processed.
+
+### 🗂️ Group Folders
+
+Group folders use parentheses (e.g., `(support)`, `(feedback)`) and serve as organizational units that are also stored as metadata in the intent data.
+
+* Group folders can be nested freely and deeply.
+* The full group path is retained and can be used for features like restricting responses to specific intent groups.
+* There are no naming restrictions for group folders.
+
+**Example Structure:**
+
+```
+intents/
+├── (support)/
+│   └── (billing)/
+│       └── [en]/
+│           └── refund_request.json
+├── (feedback)/
+│   └── [en]/
+│       └── rate_experience.json
+```
+
+### 📄 Static Intents
+
+Respond with predefined messages.
+**File types:** `.json`, `.yaml`, `.yml`
+
+**Required properties:**
+
+* `samples`: Example phrases.
+* `response`: Reply message.
+* `triggerActions`: Actions to execute.
+
+### ⚙️ Dynamic Intents
+
+Generate responses via code.
+**File type:** `.js`
+
+**Required properties:**
+
+* `samples`: Example phrases.
+* `generateResponse()`: Function returning a response string.
+* `triggerActions`: Actions to execute.
+
+### ✍️ Sample Writing Best Practices
+
+* Use full, grammatically correct sentences.
+* Provide at least 5 examples per intent.
+* Ensure variety to improve detection accuracy.
+
+### 🎯 Understanding Triggers
+
+Triggers are identifiers for custom actions you define. These are just strings — implementation depends on you or the connector used.
+
+---
+
+## 📜 License
+
+Licensed under the **GNU General Public License v3.0**. See the `LICENSE` file for more details.
+
+---
+
+Start building smarter responders with **SRF** — the framework designed for speed, flexibility, and clarity.
