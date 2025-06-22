@@ -106,7 +106,7 @@ Note: This disables all connectors.
 
 ### 🌐 Web Interface
 
-> [!WARNING] Experimental Feature
+> [!WARNING]
 > The web interface is still in development and may not be fully stable. Please use with caution and provide feedback for improvements. May not be suitable and secure for public deployment yet. Use only as local development tool.
 
 Enable in `config.json`:
