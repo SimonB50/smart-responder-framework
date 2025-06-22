@@ -1,3 +1,9 @@
+import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+
+if (!sessionStorage.getItem("authToken")) {
+  window.location.href = "/";
+}
+
 const messagesDiv = document.getElementById("messages");
 const messageInput = document.getElementById("messageInput");
 const sendButton = document.getElementById("sendButton");
@@ -19,7 +25,7 @@ sendButton.addEventListener("click", async function (event) {
 function addMessage(message, isUser = true) {
   const messageElement = document.createElement("div");
   messageElement.className = `message ${isUser ? "sent" : "received"}`;
-  messageElement.textContent = message;
+  messageElement.innerHTML = marked.parse(message);
   messagesDiv.appendChild(messageElement);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
@@ -29,6 +35,7 @@ async function getResponse(message) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${sessionStorage.getItem("authToken") || ""}`,
     },
     body: JSON.stringify({ message }),
   });

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/editor.css" />
+    <title>Smart Responder Framework</title>
+  </head>
+  <body>
+    <div class="titlebar">
+      <h1>Smart Responder Framework</h1>
+      <h2>Intent Editor</h2>
+    </div>
+    <div class="container">
+      <div id="close-editor">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-corner-left-up-icon lucide-corner-left-up"
+        >
+          <polyline points="14 9 9 4 4 9" />
+          <path d="M20 20h-7a4 4 0 0 1-4-4V4" />
+        </svg>
+        <span>Exit editor</span>
+      </div>
+      <div class="editor">
+        <div class="editor-header">
+          <h1>Editing <span id="intent-name">intent</span></h1>
+          <div class="editor-buttons">
+            <button id="save-intent">Save Intent</button>
+            <button id="delete-intent">Delete Intent</button>
+          </div>
+        </div>
+        <div class="editor-content">
+          <div class="editor-samples">
+            <h2>Samples</h2>
+            <div class="editor-samples-list">
+              <!-- <div class="editor-sample">
+                <input type="text" placeholder="Sample" />
+                <button class="delete-sample">Delete</button>
+              </div> -->
+            </div>
+            <button id="add-sample">Add Sample</button>
+          </div>
+          <div class="editor-actions">
+            <h2>Actions</h2>
+            <div class="editor-action-input">
+              <input id="action-input" type="text" placeholder="Action" />
+              <button id="add-action">Add Action</button>
+            </div>
+            <div class="editor-actions-list">
+              <!-- <div class="editor-action">
+                <span class="action-name">Action Name</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-x-icon lucide-x"
+                >
+                  <path d="M18 6 6 18" />
+                  <path d="m6 6 12 12" />
+                </svg>
+              </div> -->
+            </div>
+          </div>
+          <div class="editor-response">
+            <h2>Response</h2>
+            <textarea
+              id="response"
+              placeholder="Response"
+              rows="4"
+              cols="50"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/editor.js" type="module"></script>
+  </body>
+</html>

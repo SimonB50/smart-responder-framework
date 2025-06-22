@@ -37,6 +37,11 @@ const registerIntents = async (intents) => {
   }
 };
 
+const flushIntents = async () => {
+  registeredIntents = [];
+  Utils.logDebug("All intents have been flushed.");
+};
+
 const train = async () => {
   await manager.train();
   manager.save();
@@ -118,4 +123,4 @@ const processMessage = async (message, options = {}) => {
     : responseObject;
 };
 
-export default { registerIntents, train, processMessage };
+export default { registerIntents, flushIntents, train, processMessage };

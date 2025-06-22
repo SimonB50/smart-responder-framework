@@ -17,11 +17,11 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   padding: 1rem;
   background-color: #4a90e2;
   color: white;
   width: auto;
-  max-width: 100vw;
 
   & > h1 {
     font-size: 2rem;
@@ -36,12 +36,10 @@ body {
 .chatbox {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 1rem;
+  justify-content: space-between;
   background-color: #fff;
   color: #333;
   width: auto;
-  max-width: 100vw;
   flex-grow: 1;
   border-radius: 8px;
 
@@ -54,8 +52,6 @@ body {
 }
 
 .messagebox {
-  margin-top: auto;
-  width: 100%;
   display: flex;
   align-items: center;
   padding: 0.5rem;
@@ -84,6 +80,23 @@ body {
   }
 }
 
+.messages {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  padding-bottom: 1rem;
+  overflow-y: auto;
+  flex-grow: 1;
+  height: 0;
+
+  & > h4 {
+    font-size: 1.2rem;
+    margin: 0;
+    text-align: center;
+    color: #4a90e2;
+  }
+}
+
 .message {
   padding: 0.5rem;
   border-radius: 4px;
@@ -104,5 +117,9 @@ body {
     background-color: #fff3e0;
     align-self: flex-start;
     margin-right: auto;
+  }
+
+  & > p {
+    margin: 0;
   }
 }

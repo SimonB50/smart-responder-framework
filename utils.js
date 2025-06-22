@@ -23,6 +23,11 @@ const exists = async (path) => {
   }
 };
 
+const isIntent = (filePath) => {
+  const intentsFullPath = join(getDirname(import.meta.url), "intents");
+  return filePath.startsWith(intentsFullPath);
+};
+
 // CONFIG UTILS
 
 let configCache = {};
@@ -65,18 +70,21 @@ const logDebug = (...message) => {
 };
 
 // DATA UTILS
+
 const appendData = async (source, extras) => {
   return {
     ...source,
     ...extras,
-  }
-}
+  };
+};
+
 
 export default {
   getConfig,
   getDirname,
   isFolder,
   exists,
+  isIntent,
   logInfo,
   logError,
   logDebug,
