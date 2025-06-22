@@ -11,7 +11,7 @@
 ## 🚀 Features
 
 * 🔍 **Intent Detection** — Accurately detects the intent behind each message.
-* 🖠️ **Custom Actions** — Define tailored actions triggered by detected intents.
+* 🏹 **Custom Actions** — Define tailored actions triggered by detected intents.
 * 🌍 **Language Detection** — Identifies the language of incoming messages.
 * 🔌 **Connectors** — Seamlessly integrates with external services for dynamic responses.
 * 🌐 **Web Interface** *(Experimental)* — Intuitive UI for testing and managing intents.
@@ -104,7 +104,12 @@ npm run dev
 
 Note: This disables all connectors.
 
-### 🌐 Web Interface *(Experimental)*
+### 🌐 Web Interface
+
+> [!WARNING] Experimental Feature
+> The web interface is still in development and may not be fully stable.<br />
+> Please use with caution and provide feedback for improvements. <br />
+> May not be suitable and secure for public deployment yet. Use only as local development tool.
 
 Enable in `config.json`:
 
@@ -117,6 +122,9 @@ Enable in `config.json`:
 ```
 
 Access at `http://localhost:3000/`
+* Chat UI (`/chat`)
+* Intent explorer (`/explorer`)
+* Intent editor (`/editor`, access via editor page)
 
 **Security Tip:**
 Configure `server.auth` to restrict access and prevent unauthorized changes.
